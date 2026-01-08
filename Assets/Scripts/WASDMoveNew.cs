@@ -6,6 +6,8 @@ public class WASDMoveNew : MonoBehaviour
     PlayerInput input; // The generated C# class
     Vector2 move;
 
+    public float dashDistance = 3f;
+
     void Awake()
     {
         input = new PlayerInput(); // Initialize the input
@@ -36,6 +38,12 @@ public class WASDMoveNew : MonoBehaviour
         if (Keyboard.current.dKey.isPressed) Debug.Log("D pressed");
         if (move != Vector2.zero)
             Debug.Log("Move vector: " + move);
+
+        if (Keyboard.current.rKey.wasPressedThisFrame)
+        {
+            transform.position += transform.forward * dashDistance;
+            Debug.Log("Dash!");
+        }
 
         transform.Translate(new Vector3(move.x, 0, move.y) * 5f * Time.deltaTime);
     }
