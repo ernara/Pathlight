@@ -1,8 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class WASDMoveNew : MonoBehaviour
 {
+    public GameObject fireballPrefab;
     PlayerInput input; // The generated C# class
     Vector2 move;
 
@@ -43,6 +45,15 @@ public class WASDMoveNew : MonoBehaviour
         {
             transform.position += transform.forward * dashDistance;
             Debug.Log("Dash!");
+        }
+
+        if (Keyboard.current.qKey.wasPressedThisFrame)
+        {
+            Instantiate(
+                fireballPrefab,
+                transform.position + transform.forward,
+                transform.rotation
+            );
         }
 
         transform.Translate(new Vector3(move.x, 0, move.y) * 5f * Time.deltaTime);
