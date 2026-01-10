@@ -5,7 +5,7 @@ public class Fireball : MonoBehaviour
 {
     public GameObject fireballPrefab;
     public Transform firePoint;
-    public float fireballSpeed = 10f;
+    public float fireballSpeed = 100f;
 
     void Update()
     {
