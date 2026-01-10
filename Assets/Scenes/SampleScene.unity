@@ -132,7 +132,9 @@ GameObject:
   - component: {fileID: 161395505}
   - component: {fileID: 161395504}
   - component: {fileID: 161395503}
-  - component: {fileID: 161395508}
+  - component: {fileID: 161395509}
+  - component: {fileID: 161395510}
+  - component: {fileID: 161395511}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -259,10 +261,11 @@ Transform:
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 643147411}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &161395508
+--- !u!114 &161395509
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -271,9 +274,69 @@ MonoBehaviour:
   m_GameObject: {fileID: 161395501}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 715b31116708e1749988c4c024cb7a74, type: 3}
+  m_Script: {fileID: 11500000, guid: dcc513fa0baef4d43b976ad473e40a72, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WASDMoveNew
+  m_EditorClassIdentifier: Assembly-CSharp::Dash
+  dashDistance: 5
+--- !u!114 &161395510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161395501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de405949130c3ca478b7b60459599eba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FireballShoot
+  fireballPrefab: {fileID: 2130770226170206655, guid: 2494175d9a180e8459cb6487de3af671, type: 3}
+  firePoint: {fileID: 643147411}
+  fireballSpeed: 10
+--- !u!114 &161395511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161395501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1182fdfe757e9d348915599533e9a54d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClickMove
+  speed: 5
+--- !u!1 &643147410
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 643147411}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &643147411
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643147410}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 161395507}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

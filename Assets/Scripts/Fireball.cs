@@ -1,17 +1,23 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Fireball : MonoBehaviour
 {
-    public float speed = 10f;
-    public float lifeTime = 2f;
-
-    void Start()
-    {
-        Destroy(gameObject, lifeTime);
-    }
+    public GameObject fireballPrefab;
+    public Transform firePoint;
+    public float fireballSpeed = 10f;
 
     void Update()
     {
-        transform.position += transform.forward * speed * Time.deltaTime;
+        if (Keyboard.current.qKey.wasPressedThisFrame)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                Vector3 dir = (hit.point - firePoint.position).normalized;
+                GameObject fb = Instantiate(fireballPrefab, firePoint.position, Quaternion.LookRotation(dir));
+                fb.GetComponent<Rigidbody>().linearVelocity = dir * fireballSpeed;
+            }
+        }
     }
 }
