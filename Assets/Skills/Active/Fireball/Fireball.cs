@@ -5,7 +5,17 @@ public class Fireball : MonoBehaviour
 {
     public GameObject fireballPrefab;
     public Transform firePoint;
-    public float fireballSpeed = 100f;
+    public float fireballSpeed = 20f;
+    public float spreadAngle = 10f; // degrees for multiple projectiles
+
+    int GetProjectileCount()
+    {
+        int count = 1;
+        MoreProjectiles support = GetComponent<MoreProjectiles>();
+        if (support != null)
+            count += support.extraProjectiles;
+        return count;
+    }
 
     void Update()
     {
@@ -14,10 +24,58 @@ public class Fireball : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                Vector3 dir = (hit.point - firePoint.position).normalized;
-                GameObject fb = Instantiate(fireballPrefab, firePoint.position, Quaternion.LookRotation(dir));
-                fb.GetComponent<Rigidbody>().linearVelocity = dir * fireballSpeed;
+                Vector3 baseDir = hit.point - firePoint.position;
+                baseDir.y = 0f;
+                baseDir.Normalize();
+
+                int total = GetProjectileCount();
+                for (int i = 0; i < total; i++)
+                {
+                    float angleOffset = 0f;
+                    if (total > 1)
+                        angleOffset = Mathf.Lerp(-spreadAngle, spreadAngle, i / (float)(total - 1));
+
+                    Vector3 dir = Quaternion.Euler(0f, angleOffset, 0f) * baseDir;
+
+                    Vector3 spawnPos = firePoint.position;
+                    spawnPos.y = firePoint.position.y;
+
+                    GameObject fb = Instantiate(fireballPrefab, spawnPos, Quaternion.LookRotation(dir));
+
+                    Collider playerCol = GetComponent<Collider>();
+                    if (playerCol != null)
+                        Physics.IgnoreCollision(fb.GetComponent<Collider>(), playerCol);
+
+                    fb.AddComponent<FireballProjectile>().Initialize(dir, fireballSpeed);
+                }
             }
         }
+    }
+}
+
+public class FireballProjectile : MonoBehaviour
+{
+    Vector3 direction;
+    float speed;
+
+    public void Initialize(Vector3 dir, float spd)
+    {
+        direction = dir;
+        speed = spd;
+    }
+
+    void Update()
+    {
+        transform.position += direction * speed * Time.deltaTime;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player")) return;
+        if (other.CompareTag("Enemy"))
+        {
+            Debug.Log("Hit enemy: " + other.name);
+        }
+        Destroy(gameObject);
     }
 }

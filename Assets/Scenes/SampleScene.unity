@@ -135,6 +135,8 @@ GameObject:
   - component: {fileID: 161395509}
   - component: {fileID: 161395510}
   - component: {fileID: 161395511}
+  - component: {fileID: 161395512}
+  - component: {fileID: 161395513}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -165,7 +167,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -293,6 +295,7 @@ MonoBehaviour:
   fireballPrefab: {fileID: 2130770226170206655, guid: 2494175d9a180e8459cb6487de3af671, type: 3}
   firePoint: {fileID: 643147411}
   fireballSpeed: 10
+  spreadAngle: 10
 --- !u!114 &161395511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,6 +309,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ClickMove
   speed: 5
+--- !u!114 &161395512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161395501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 275f8ea2979c9ba44970fac366bec456, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CloudSpell
+  cloudPrefab: {fileID: 5159739692173132986, guid: 7a6ca42e3e0e7814687d42181e5fc92f, type: 3}
+  spawnPoint: {fileID: 643147411}
+  cloudSpeed: 5
+  cloudCount: 5
+  spreadAngle: 15
+--- !u!114 &161395513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161395501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aca24307014d5443a64301873f3ab3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MoreProjectiles
+  extraProjectiles: 30
 --- !u!1 &643147410
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,7 +364,7 @@ Transform:
   m_GameObject: {fileID: 643147410}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

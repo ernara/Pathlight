@@ -14,6 +14,7 @@ public class Dash : MonoBehaviour
             {
                 Vector3 dir = (hit.point - transform.position).normalized;
                 transform.position += new Vector3(dir.x, 0, dir.z) * dashDistance;
+                GetComponent<ClickMove>().StopMovement();
             }
         }
     }
