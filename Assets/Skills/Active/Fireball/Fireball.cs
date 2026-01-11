@@ -6,7 +6,10 @@ public class Fireball : MonoBehaviour
     public GameObject fireballPrefab;
     public Transform firePoint;
     public float fireballSpeed = 20f;
-    public float spreadAngle = 10f; // degrees for multiple projectiles
+    public float spreadAngle = 10f; 
+    public float cooldown = 1f;
+
+    float lastCastTime;
 
     int GetProjectileCount()
     {
@@ -17,10 +20,23 @@ public class Fireball : MonoBehaviour
         return count;
     }
 
+    float GetFinalCooldown()
+    {
+        float cd = cooldown;
+        CooldownReduction cdr = GetComponent<CooldownReduction>();
+        if (cdr != null)
+            cd *= 1f - cdr.reductionPercent;
+        return Mathf.Max(0.05f, cd);
+    }
+
     void Update()
     {
         if (Keyboard.current.qKey.wasPressedThisFrame)
         {
+            if (Time.time - lastCastTime < GetFinalCooldown())
+                return;
+
+            lastCastTime = Time.time;
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
