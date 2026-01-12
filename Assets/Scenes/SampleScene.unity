@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 161395511}
   - component: {fileID: 161395512}
   - component: {fileID: 161395513}
+  - component: {fileID: 161395514}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -296,6 +297,7 @@ MonoBehaviour:
   firePoint: {fileID: 643147411}
   fireballSpeed: 10
   spreadAngle: 10
+  cooldown: 1
 --- !u!114 &161395511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,6 +341,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoreProjectiles
   extraProjectiles: 30
+--- !u!114 &161395514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161395501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a5cf5f18fc56df44a030ccf53b6fc28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CooldownReduction
+  reductionPercent: 0.54
 --- !u!1 &643147410
 GameObject:
   m_ObjectHideFlags: 0

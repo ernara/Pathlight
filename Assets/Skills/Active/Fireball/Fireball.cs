@@ -8,6 +8,7 @@ public class Fireball : MonoBehaviour
     public float fireballSpeed = 20f;
     public float spreadAngle = 10f; 
     public float cooldown = 1f;
+    public float projectileDuration = 2f;
 
     float lastCastTime;
 
@@ -62,7 +63,8 @@ public class Fireball : MonoBehaviour
                     if (playerCol != null)
                         Physics.IgnoreCollision(fb.GetComponent<Collider>(), playerCol);
 
-                    fb.AddComponent<FireballProjectile>().Initialize(dir, fireballSpeed);
+                    fb.AddComponent<FireballProjectile>()
+                        .Initialize(dir, fireballSpeed, projectileDuration, gameObject);
                 }
             }
         }
@@ -73,11 +75,19 @@ public class FireballProjectile : MonoBehaviour
 {
     Vector3 direction;
     float speed;
+    float lifetime;
 
-    public void Initialize(Vector3 dir, float spd)
+    public void Initialize(Vector3 dir, float spd, float baseDuration, GameObject caster)
     {
         direction = dir;
         speed = spd;
+        lifetime = baseDuration;
+
+        MoreDuration md = caster.GetComponent<MoreDuration>();
+        if (md != null)
+            lifetime *= md.durationMultiplier;
+
+        Destroy(gameObject, lifetime);
     }
 
     void Update()
@@ -88,10 +98,7 @@ public class FireballProjectile : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player")) return;
-        if (other.CompareTag("Enemy"))
-        {
-            Debug.Log("Hit enemy: " + other.name);
-        }
         Destroy(gameObject);
     }
 }
+
