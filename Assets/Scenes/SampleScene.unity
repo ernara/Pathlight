@@ -138,6 +138,9 @@ GameObject:
   - component: {fileID: 161395512}
   - component: {fileID: 161395513}
   - component: {fileID: 161395514}
+  - component: {fileID: 161395515}
+  - component: {fileID: 161395517}
+  - component: {fileID: 161395516}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -296,8 +299,9 @@ MonoBehaviour:
   fireballPrefab: {fileID: 2130770226170206655, guid: 2494175d9a180e8459cb6487de3af671, type: 3}
   firePoint: {fileID: 643147411}
   fireballSpeed: 10
-  spreadAngle: 10
-  cooldown: 1
+  spreadAngle: 20
+  cooldown: 0.1
+  projectileDuration: 2
 --- !u!114 &161395511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,7 +344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aca24307014d5443a64301873f3ab3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoreProjectiles
-  extraProjectiles: 30
+  extraProjectiles: 4
 --- !u!114 &161395514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,7 +357,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a5cf5f18fc56df44a030ccf53b6fc28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CooldownReduction
-  reductionPercent: 0.54
+  reductionPercent: 0.203
+--- !u!114 &161395515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161395501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c09d36a56430e9041bb74a2fd1aa3593, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReturnToStart
+  enableReturn: 1
+  returnDuration: 0.5
+  startPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &161395516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161395501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f00bb03077ac94f409fa2dee602a622e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MoreDuration
+  durationMultiplier: 1.5
+--- !u!114 &161395517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161395501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f00bb03077ac94f409fa2dee602a622e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MoreDuration
+  durationMultiplier: 1.5
 --- !u!1 &643147410
 GameObject:
   m_ObjectHideFlags: 0
