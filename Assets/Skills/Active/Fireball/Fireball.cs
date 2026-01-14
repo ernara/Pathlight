@@ -9,6 +9,8 @@ public class Fireball : MonoBehaviour
     public float spreadAngle = 10f; 
     public float cooldown = 0.1f;
     public float projectileDuration = 4f;
+    bool lastHandRight = false;
+
 
     float lastCastTime;
 
@@ -36,6 +38,17 @@ public class Fireball : MonoBehaviour
         {
             if (Time.time - lastCastTime < GetFinalCooldown())
                 return;
+
+            Animator animator = GetComponentInChildren<Animator>();
+            if (animator != null)
+            {
+                if (lastHandRight)
+                    animator.SetTrigger("PunchLeft");
+                else
+                    animator.SetTrigger("PunchRight");
+
+                lastHandRight = !lastHandRight; 
+            }
 
             lastCastTime = Time.time;
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -67,6 +80,8 @@ public class Fireball : MonoBehaviour
                         .Initialize(dir, fireballSpeed, projectileDuration, gameObject);
                 }
             }
+
+
         }
     }
 }
