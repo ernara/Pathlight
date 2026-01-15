@@ -72,6 +72,17 @@ public class Fireball : MonoBehaviour
 
                     GameObject fb = Instantiate(fireballPrefab, spawnPos, Quaternion.LookRotation(dir));
 
+                    SpellEcho echo = GetComponent<SpellEcho>();
+                    if (echo != null)
+                    {
+                        StartCoroutine(EchoFireball(
+                            spawnPos,
+                            dir,
+                            echo.echoDelay
+                        ));
+                    }
+
+
                     Collider playerCol = GetComponent<Collider>();
                     if (playerCol != null)
                         Physics.IgnoreCollision(fb.GetComponent<Collider>(), playerCol);
@@ -84,6 +95,21 @@ public class Fireball : MonoBehaviour
 
         }
     }
+
+    System.Collections.IEnumerator EchoFireball(Vector3 origin, Vector3 dir, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        GameObject fb = Instantiate(
+            fireballPrefab,
+            origin,
+            Quaternion.LookRotation(dir)
+        );
+
+        fb.AddComponent<FireballProjectile>()
+          .Initialize(dir, fireballSpeed, projectileDuration, gameObject);
+    }
+
 }
 
 public class FireballProjectile : MonoBehaviour
