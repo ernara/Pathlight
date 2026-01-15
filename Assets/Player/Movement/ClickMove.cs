@@ -7,6 +7,12 @@ public class ClickMove : MonoBehaviour
 
     Vector3 target;
     bool hasTarget;
+    Animator animator;
+
+    void Start()
+    {
+        animator = GetComponentInChildren<Animator>();
+    }
 
     void Update()
     {
@@ -17,6 +23,8 @@ public class ClickMove : MonoBehaviour
             {
                 target = hit.point;
                 hasTarget = true;
+                if (animator != null)
+                    animator.SetBool("IsMoving", true);
             }
         }
 
@@ -26,12 +34,18 @@ public class ClickMove : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, movePos, speed * Time.deltaTime);
 
             if (Vector3.Distance(transform.position, movePos) < 0.1f)
+            {
                 hasTarget = false;
+                if (animator != null)
+                    animator.SetBool("IsMoving", false);
+            }
         }
     }
 
     public void StopMovement()
     {
         hasTarget = false;
+        if (animator != null)
+            animator.SetBool("IsMoving", false);
     }
 }
