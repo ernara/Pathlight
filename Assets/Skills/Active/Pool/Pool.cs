@@ -4,49 +4,44 @@ using UnityEngine.InputSystem;
 public class Pool : MonoBehaviour
 {
     public GameObject poolPrefab;
-    public float duration = 3f;
+    public float lifetime = 5f;
 
     void Update()
     {
         if (Keyboard.current.tKey.wasPressedThisFrame)
         {
+            Debug.Log("hmmmm");
             CastPool();
         }
     }
 
-    //void CastPool()
-    //{
-    //    Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-    //    int groundMask = LayerMask.GetMask("Ground");
-
-    //    if (!Physics.Raycast(ray, out RaycastHit hit, 1000f, groundMask))
-    //        return;
-
-    //    Vector3 pos = new Vector3(hit.point.x, 1.01f, hit.point.z);
-
-    //    GameObject pool = Instantiate(
-    //        poolPrefab,
-    //        pos,
-    //        Quaternion.identity
-    //    );
-
-    //    Destroy(pool, duration);
-    //}
-
     void CastPool()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        if (!Physics.Raycast(ray, out RaycastHit hit, 1000f))
+        if (Camera.main == null)
+        {
+            Debug.LogError("No Main Camera");
             return;
+        }
 
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-        Debug.Log("Pool hit point: " + hit.point);
+        if (!Physics.Raycast(ray, out RaycastHit hit, 500f))
+        {
+            Debug.Log("Raycast failed");
+            return;
+        }
 
-        float groundTop = hit.collider.bounds.max.y;
-        Vector3 pos = new Vector3(hit.point.x, groundTop + 0.02f, hit.point.z);
+        Debug.Log("Hit: " + hit.collider.name);
 
-        GameObject pool = Instantiate(poolPrefab, pos, Quaternion.identity);
-        Destroy(pool, duration);
+        Vector3 spawnPos = hit.point;
+        spawnPos.y += 0.02f; // avoid z-fighting
+
+        GameObject pool = Instantiate(
+            poolPrefab,
+            spawnPos,
+            Quaternion.identity
+        );
+
+        Destroy(pool, lifetime);
     }
-
 }

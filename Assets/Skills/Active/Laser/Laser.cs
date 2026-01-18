@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class Laser : MonoBehaviour
 {
@@ -7,12 +8,6 @@ public class Laser : MonoBehaviour
     public Transform firePoint;
     public float laserDuration = 0.5f;
     public float laserLength = 100f;
-
-
-    Color GetRandomLaserColor()
-    {
-        return new Color(Random.value, Random.value, Random.value);
-    }
 
     void Update()
     {
@@ -32,22 +27,30 @@ public class Laser : MonoBehaviour
         dir.y = 0f;
         dir.Normalize();
 
-        Vector3 originPos = firePoint.position;
-        Vector3 fireDir = dir;
+        SpawnLaser(firePoint.position, dir);
 
-
-        GameObject laser = Instantiate(laserPrefab, firePoint.position, Quaternion.LookRotation(dir));
-
-        //uzkomentuoti
-
-        Renderer r = laser.GetComponent<Renderer>();
-        if (r != null)
+        SpellEcho echo = GetComponent<SpellEcho>();
+        if (echo != null)
         {
-            r.material = new Material(r.material);
-            r.material.color = GetRandomLaserColor();
+            StartCoroutine(EchoLaser(firePoint.position, dir, echo.echoDelay));
         }
+    }
 
-        //
+    IEnumerator EchoLaser(Vector3 origin, Vector3 dir, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SpawnLaser(origin, dir);
+    }
+
+    void SpawnLaser(Vector3 origin, Vector3 dir)
+    {
+        GameObject laser = Instantiate(
+            laserPrefab,
+            origin,
+            Quaternion.LookRotation(dir)
+        );
+
+        ApplyThicc(laser);
 
         laser.transform.localScale = new Vector3(
             laser.transform.localScale.x,
@@ -57,35 +60,19 @@ public class Laser : MonoBehaviour
 
         laser.transform.position += dir * laserLength * 0.5f;
 
-        SpellEcho echo = GetComponent<SpellEcho>();
-        if (echo != null)
-        {
-            StartCoroutine(EchoLaser(originPos, fireDir, echo.echoDelay));
-        }
-
-
         Destroy(laser, laserDuration);
     }
 
-    System.Collections.IEnumerator EchoLaser(Vector3 origin, Vector3 dir, float delay)
+    void ApplyThicc(GameObject laser)
     {
-        yield return new WaitForSeconds(delay);
+        Thicc thicc = GetComponent<Thicc>();
+        if (thicc == null)
+            return;
 
-        GameObject echoLaser = Instantiate(
-            laserPrefab,
-            origin,
-            Quaternion.LookRotation(dir)
+        laser.transform.localScale = new Vector3(
+            laser.transform.localScale.x * thicc.thicknessMultiplier,
+            laser.transform.localScale.y * thicc.thicknessMultiplier,
+            laser.transform.localScale.z
         );
-
-        echoLaser.transform.localScale = new Vector3(
-            echoLaser.transform.localScale.x,
-            echoLaser.transform.localScale.y,
-            laserLength
-        );
-
-        echoLaser.transform.position += dir * laserLength * 0.5f;
-
-        Destroy(echoLaser, laserDuration);
     }
-
 }
