@@ -45,3 +45,13 @@ public class Pool : MonoBehaviour
         Destroy(pool, lifetime);
     }
 }
+
+public class DamagePool : MonoBehaviour
+{
+    void OnTriggerStay(Collider other)
+    {
+        Enemy enemy = other.GetComponent<Enemy>();
+        if (enemy != null)
+            enemy.TakeHit(gameObject);
+    }
+}

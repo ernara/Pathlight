@@ -67,8 +67,12 @@ public class Fireball : MonoBehaviour
 
                     Vector3 dir = Quaternion.Euler(0f, angleOffset, 0f) * baseDir;
 
-                    Vector3 spawnPos = firePoint.position;
-                    spawnPos.y = firePoint.position.y;
+                    //change1/3
+                    //Vector3 spawnPos = firePoint.position;
+                    //spawnPos.y = firePoint.position.y;
+
+                    Vector3 spawnPos = firePoint.position + dir * 0.5f;
+                    /////
 
                     GameObject fb = Instantiate(fireballPrefab, spawnPos, Quaternion.LookRotation(dir));
 
@@ -82,13 +86,14 @@ public class Fireball : MonoBehaviour
                         ));
                     }
 
-
-                    Collider playerCol = GetComponent<Collider>();
-                    if (playerCol != null)
-                        Physics.IgnoreCollision(fb.GetComponent<Collider>(), playerCol);
-
-                    fb.AddComponent<FireballProjectile>()
-                        .Initialize(dir, fireballSpeed, projectileDuration, gameObject);
+                    //change2/3
+                    //Collider playerCol = GetComponent<Collider>();
+                    //if (playerCol != null)
+                    //    Physics.IgnoreCollision(fb.GetComponent<Collider>(), playerCol);
+                    /////
+                    ///
+                    fb.GetComponent<FireballProjectile>()
+  .Initialize(dir, fireballSpeed, projectileDuration, gameObject);
                 }
             }
 
@@ -99,65 +104,28 @@ public class Fireball : MonoBehaviour
     System.Collections.IEnumerator EchoFireball(Vector3 origin, Vector3 dir, float delay)
     {
         yield return new WaitForSeconds(delay);
+        //change3/3
+        //GameObject fb = Instantiate(
+        //    fireballPrefab,
+        //    origin,
+        //    Quaternion.LookRotation(dir)
+        //);
 
         GameObject fb = Instantiate(
-            fireballPrefab,
-            origin,
-            Quaternion.LookRotation(dir)
-        );
+        fireballPrefab,
+        origin + dir * 0.5f,
+        Quaternion.LookRotation(dir)
+);
 
-        fb.AddComponent<FireballProjectile>()
+        ///
+
+        ///4
+        fb.GetComponent<FireballProjectile>()
           .Initialize(dir, fireballSpeed, projectileDuration, gameObject);
     }
 
 }
 
-public class FireballProjectile : MonoBehaviour
-{
-    Vector3 direction;
-    float speed;
-    float lifetime;
-    Vector3 startPosition;
-    bool returning = false;
-
-    public void Initialize(Vector3 dir, float spd, float baseDuration, GameObject caster)
-    {
-        direction = dir;
-        speed = spd;
-        lifetime = baseDuration;
-        startPosition = transform.position;
-
-        MoreDuration md = caster.GetComponent<MoreDuration>();
-        if (md != null)
-            lifetime *= md.durationMultiplier;
-
-        ReturnToStart rts = caster.GetComponent<ReturnToStart>();
-        if (rts != null && rts.enableReturn)
-            Invoke(nameof(StartReturn), lifetime);
-        else
-            Destroy(gameObject, lifetime);
-    }
-
-    void StartReturn()
-    {
-        returning = true;
-        direction = (startPosition - transform.position).normalized;
-    }
-
-    void Update()
-    {
-        transform.position += direction * speed * Time.deltaTime;
-
-        if (returning && Vector3.Distance(transform.position, startPosition) < 0.1f)
-            Destroy(gameObject);
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player")) return;
-        Destroy(gameObject);
-    }
-}
 
 
 

@@ -76,3 +76,15 @@ public class Laser : MonoBehaviour
         );
     }
 }
+
+public class LaserHit : MonoBehaviour
+{
+    void OnTriggerEnter(Collider other)
+    {
+        Enemy enemy = other.GetComponent<Enemy>();
+        if (enemy != null)
+        {
+            enemy.TakeHit(gameObject);
+        }
+    }
+}

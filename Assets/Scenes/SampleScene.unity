@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 161395520}
   - component: {fileID: 161395521}
   - component: {fileID: 161395522}
+  - component: {fileID: 161395523}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -450,7 +451,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pool
   poolPrefab: {fileID: 7987362700310603676, guid: 42a39f7233c66094aa7c637d043e7cea, type: 3}
-  duration: 3
+  lifetime: 5
+--- !u!114 &161395523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161395501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a6c0781b3323d540b03e19fc14ffec8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Thicc
+  thicknessMultiplier: 20
 --- !u!1 &401126579
 GameObject:
   m_ObjectHideFlags: 0
