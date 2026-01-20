@@ -45,7 +45,7 @@ public class FireballProjectile : MonoBehaviour
         Enemy enemy = other.GetComponent<Enemy>();
         if (enemy != null)
         {
-            enemy.TakeHit(gameObject);
+            //enemy.TakeHit(gameObject);
             Destroy(gameObject);
             return;
         }

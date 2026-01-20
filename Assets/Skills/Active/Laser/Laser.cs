@@ -84,7 +84,7 @@ public class LaserHit : MonoBehaviour
         Enemy enemy = other.GetComponent<Enemy>();
         if (enemy != null)
         {
-            enemy.TakeHit(gameObject);
+            //enemy.TakeHit(gameObject);
         }
     }
 }

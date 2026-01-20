@@ -46,12 +46,12 @@ public class Pool : MonoBehaviour
     }
 }
 
-public class DamagePool : MonoBehaviour
-{
-    void OnTriggerStay(Collider other)
-    {
-        Enemy enemy = other.GetComponent<Enemy>();
-        if (enemy != null)
-            enemy.TakeHit(gameObject);
-    }
-}
+//public class DamagePool : MonoBehaviour
+//{
+//    void OnTriggerStay(Collider other)
+//    {
+//        Enemy enemy = other.GetComponent<Enemy>();
+//        if (enemy != null)
+//            enemy.TakeHit(gameObject);
+//    }
+//}

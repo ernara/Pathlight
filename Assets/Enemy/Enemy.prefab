@@ -156,8 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b4554adb9264e04cbf4ef4db256b6e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  hp: 1
-  poolHitCooldown: 5
+  hp: 3
 --- !u!114 &5276994668082851197
 MonoBehaviour:
   m_ObjectHideFlags: 0
