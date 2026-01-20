@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 
-public class SimpleHitSkill : MonoBehaviour
+public class SimpleHitSkill : HitSkillBase
 {
     public Transform firePoint;
     public float range = 20f;
@@ -37,11 +37,7 @@ public class SimpleHitSkill : MonoBehaviour
         {
             endPoint = hit.point;
 
-            Enemy enemy = hit.collider.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                enemy.TakeHit();
-            }
+            TryHit(hit.collider);
         }
 
         StartCoroutine(ShowLine(endPoint));

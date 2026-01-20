@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FireballProjectile : MonoBehaviour
+public class FireballProjectile : HitSkillBase
 {
     Vector3 direction;
     float speed;
@@ -42,15 +42,10 @@ public class FireballProjectile : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Enemy enemy = other.GetComponent<Enemy>();
-        if (enemy != null)
-        {
-            //enemy.TakeHit(gameObject);
-            Destroy(gameObject);
+        if (other.CompareTag("Player"))
             return;
-        }
 
-        if (other.CompareTag("Player")) return;
+        TryHit(other);
         Destroy(gameObject);
     }
 }

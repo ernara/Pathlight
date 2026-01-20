@@ -29,17 +29,24 @@
 //    }
 //}
 
+
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int hp = 3;
+    public int hp = 1;
 
-    public void TakeHit()
+    public void TakeHit(int damage)
     {
-        hp -= 1;
+        hp -= damage;
 
         if (hp <= 0)
-            Destroy(gameObject);
+            Die();
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
     }
 }
+
