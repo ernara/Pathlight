@@ -9,8 +9,14 @@ public class ClickMove : MonoBehaviour
     bool hasTarget;
     Animator animator;
 
+    Vector3 lookDir;
+
+    AimController aim;
+
+
     void Start()
     {
+        aim = GetComponent<AimController>();
         animator = GetComponentInChildren<Animator>();
     }
 
@@ -23,13 +29,27 @@ public class ClickMove : MonoBehaviour
             {
                 target = hit.point;
                 hasTarget = true;
+                lookDir = target - transform.position;
+                lookDir.y = 0f;
                 if (animator != null)
                     animator.SetBool("IsMoving", true);
+                if (aim != null)
+                    aim.SetAim(target - transform.position);
+
             }
         }
 
         if (hasTarget)
         {
+            if (lookDir != Vector3.zero)
+            {
+                Quaternion rot = Quaternion.LookRotation(lookDir);
+                transform.rotation = Quaternion.Slerp(
+                    transform.rotation,
+                    rot,
+                    10f * Time.deltaTime
+                );
+            }
             Vector3 movePos = new Vector3(target.x, transform.position.y, target.z);
             transform.position = Vector3.MoveTowards(transform.position, movePos, speed * Time.deltaTime);
 
@@ -37,7 +57,10 @@ public class ClickMove : MonoBehaviour
             {
                 hasTarget = false;
                 if (animator != null)
+                {
                     animator.SetBool("IsMoving", false);
+                }
+               
             }
         }
     }

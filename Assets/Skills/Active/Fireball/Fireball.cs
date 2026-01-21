@@ -57,6 +57,11 @@ public class Fireball : MonoBehaviour
                 Vector3 baseDir = hit.point - firePoint.position;
                 baseDir.y = 0f;
                 baseDir.Normalize();
+                AimController aim = GetComponent<AimController>();
+                if (aim != null)
+                    aim.SetAim(baseDir);
+
+
 
                 int total = GetProjectileCount();
                 for (int i = 0; i < total; i++)
