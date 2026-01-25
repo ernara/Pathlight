@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -7,9 +8,14 @@ public class CameraFollow : MonoBehaviour
     public float followSpeed = 1f;
     Vector3 velocity;
 
+    bool locked;
+
     void LateUpdate()
     {
-        if (target == null) return;
+        if (Keyboard.current.lKey.wasPressedThisFrame)
+            locked = !locked;
+
+        if (target == null || locked) return;
 
         Vector3 desiredPos = target.position + offset;
         transform.position = Vector3.SmoothDamp(
