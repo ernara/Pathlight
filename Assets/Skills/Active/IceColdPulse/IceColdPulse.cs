@@ -6,6 +6,9 @@ public class IceColdPulse : MonoBehaviour
     public float range = 10f;
     public LayerMask enemyLayer;
 
+    public GameObject pulsePrefab;
+    public float pulseDuration = 0.5f;
+
     void Update()
     {
         if (Keyboard.current != null && Keyboard.current.cKey.wasPressedThisFrame)
@@ -17,23 +20,24 @@ public class IceColdPulse : MonoBehaviour
 
     void Cast()
     {
-        Debug.Log("Pulse position: " + transform.position);
+        if (pulsePrefab != null)
+        {
+            GameObject pulse = Instantiate(pulsePrefab, transform.position, Quaternion.identity);
+            pulse.transform.localScale = Vector3.one * range * 2f;
+            Destroy(pulse, pulseDuration);
+        }
 
-        Collider[] hits = Physics.OverlapSphere(
-            transform.position,
-            range,
-            enemyLayer
-        );
 
-        Debug.Log("Found colliders: " + hits.Length);
+        Collider[] hits = Physics.OverlapSphere(transform.position, range);
+
 
         foreach (var h in hits)
         {
-            Debug.Log(
-                "Hit object: " + h.name +
-                " distance=" +
-                Vector3.Distance(transform.position, h.transform.position)
-            );
+            Enemy2 e = h.GetComponent<Enemy2>();
+            if (e != null)
+            {
+                e.Hit();
+            }
         }
 
         if (hits.Length == 0)
@@ -43,10 +47,6 @@ public class IceColdPulse : MonoBehaviour
         if (enemy2 != null)
         {
             enemy2.Hit();
-        }
-        else
-        {
-            Debug.Log("No Enemy2 component found");
         }
     }
 
