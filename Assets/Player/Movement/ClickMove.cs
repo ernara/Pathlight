@@ -1,18 +1,20 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class ClickMove : MonoBehaviour
 {
-    public float speed = 5f;
+    [Header("Base Speed")]
+    public float baseSpeed = 5f;
+
+    float flatBonus;
+    float percentBonus;
 
     Vector3 target;
     bool hasTarget;
     Animator animator;
-
     Vector3 lookDir;
-
     AimController aim;
-
 
     void Start()
     {
@@ -31,11 +33,9 @@ public class ClickMove : MonoBehaviour
                 hasTarget = true;
                 lookDir = target - transform.position;
                 lookDir.y = 0f;
-                if (animator != null)
-                    animator.SetBool("IsMoving", true);
-                if (aim != null)
-                    aim.SetAim(target - transform.position);
 
+                animator?.SetBool("IsMoving", true);
+                aim?.SetAim(target - transform.position);
             }
         }
 
@@ -50,25 +50,47 @@ public class ClickMove : MonoBehaviour
                     10f * Time.deltaTime
                 );
             }
+
             Vector3 movePos = new Vector3(target.x, transform.position.y, target.z);
-            transform.position = Vector3.MoveTowards(transform.position, movePos, speed * Time.deltaTime);
+
+            transform.position = Vector3.MoveTowards(
+                transform.position,
+                movePos,
+                GetFinalSpeed() * Time.deltaTime
+            );
 
             if (Vector3.Distance(transform.position, movePos) < 0.1f)
             {
                 hasTarget = false;
-                if (animator != null)
-                {
-                    animator.SetBool("IsMoving", false);
-                }
-               
+                animator?.SetBool("IsMoving", false);
             }
         }
+    }
+
+    float GetFinalSpeed()
+    {
+        float result = baseSpeed + flatBonus;
+        result *= (1f + percentBonus);
+        return result;
+    }
+
+    // ===== Aura API =====
+
+    public void AddSpeedModifier(float flat, float percent)
+    {
+        flatBonus += flat;
+        percentBonus += percent;
+    }
+
+    public void RemoveSpeedModifier(float flat, float percent)
+    {
+        flatBonus -= flat;
+        percentBonus -= percent;
     }
 
     public void StopMovement()
     {
         hasTarget = false;
-        if (animator != null)
-            animator.SetBool("IsMoving", false);
+        animator?.SetBool("IsMoving", false);
     }
 }
