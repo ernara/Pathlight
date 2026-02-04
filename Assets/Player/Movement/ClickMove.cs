@@ -74,8 +74,6 @@ public class ClickMove : MonoBehaviour
         return result;
     }
 
-    // ===== Aura API =====
-
     public void AddSpeedModifier(float flat, float percent)
     {
         flatBonus += flat;
