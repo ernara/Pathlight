@@ -167,6 +167,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1639106213793722189, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6326949551973412265, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1588,9 +1592,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48994a21e9fdfa7449fe55b76d3e24fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ClonePlayer
-  clonePrefab: {fileID: 6326949551973412265, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
-  cloneDuration: 10
+  clonePrefab: {fileID: 1603079551}
   cloneCount: 10
+  spawnRadius: 5
+  cloneDuration: 10
 --- !u!1001 &1662073906
 PrefabInstance:
   m_ObjectHideFlags: 0
