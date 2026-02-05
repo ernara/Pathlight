@@ -174,7 +174,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6326949551973412265, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1603079552}
   m_SourcePrefab: {fileID: 100100000, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
 --- !u!1 &401126579
 GameObject:
@@ -1568,6 +1571,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1597152654}
   m_CullTransparentMesh: 1
+--- !u!1 &1603079551 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6326949551973412265, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
+  m_PrefabInstance: {fileID: 228725}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1603079552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1603079551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48994a21e9fdfa7449fe55b76d3e24fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClonePlayer
+  clonePrefab: {fileID: 6326949551973412265, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
+  cloneDuration: 10
+  cloneCount: 10
 --- !u!1001 &1662073906
 PrefabInstance:
   m_ObjectHideFlags: 0
