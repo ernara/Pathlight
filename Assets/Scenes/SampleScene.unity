@@ -664,54 +664,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &728890958
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 728890960}
-  - component: {fileID: 728890959}
-  m_Layer: 0
-  m_Name: EnemySpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &728890959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 728890958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e6988773926f304fb9e46e628e32e80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
-  enemyPrefab: {fileID: 2032697478012883521, guid: 71200d62bd4b2de4a80067a0f9e4779c, type: 3}
-  spawnRadiusMin: 6
-  spawnRadiusMax: 10
-  spawnInterval: 2
---- !u!4 &728890960
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 728890958}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.43797, y: 0.22638, z: 2.68213}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &732001900
 GameObject:
   m_ObjectHideFlags: 0
@@ -1592,10 +1544,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48994a21e9fdfa7449fe55b76d3e24fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ClonePlayer
-  clonePrefab: {fileID: 1603079551}
+  clonePrefab: {fileID: 8338859774702175631, guid: e1dae16b958044e47a6e020fe35c6650, type: 3}
   cloneCount: 10
   spawnRadius: 5
-  cloneDuration: 10
 --- !u!1001 &1662073906
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1973,7 +1924,6 @@ SceneRoots:
   - {fileID: 1153204881}
   - {fileID: 902515539}
   - {fileID: 1744954512}
-  - {fileID: 728890960}
   - {fileID: 1556745590103132079}
   - {fileID: 1662073906}
   - {fileID: 228725}
