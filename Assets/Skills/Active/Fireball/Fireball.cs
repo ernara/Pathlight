@@ -1,18 +1,31 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
+using TMPro;
+
 
 public class Fireball : MonoBehaviour
 {
     public GameObject fireballPrefab;
     public Transform firePoint;
     public float fireballSpeed = 10f;
-    public float spreadAngle = 10f; 
+    public float spreadAngle = 10f;
     public float cooldown = 0.1f;
     public float projectileDuration = 4f;
+    public TextMeshProUGUI cooldownText;
+
+
+
     bool lastHandRight = false;
+    float lastCastTime = -999f;
 
+    public event System.Action OnFireballCast;
 
-    float lastCastTime;
+    public float CooldownRemaining =>
+        Mathf.Max(0f, GetFinalCooldown() - (Time.time - lastCastTime));
+
+    public float CooldownTotal =>
+        GetFinalCooldown();
 
     int GetProjectileCount()
     {
@@ -34,103 +47,79 @@ public class Fireball : MonoBehaviour
 
     void Update()
     {
-        if (Keyboard.current.qKey.wasPressedThisFrame)
+        float remaining = GetFinalCooldown() - (Time.time - lastCastTime);
+
+        if (remaining > 0)
+            cooldownText.text = remaining.ToString("F1");
+        else
+            cooldownText.text = "";
+
+
+        if (!Keyboard.current.qKey.wasPressedThisFrame)
+            return;
+
+        if (Time.time - lastCastTime < GetFinalCooldown())
+            return;
+
+        lastCastTime = Time.time;
+        OnFireballCast?.Invoke();
+
+        Animator animator = GetComponentInChildren<Animator>();
+        if (animator != null)
         {
-            if (Time.time - lastCastTime < GetFinalCooldown())
-                return;
+            animator.SetTrigger(lastHandRight ? "PunchLeft" : "PunchRight");
+            lastHandRight = !lastHandRight;
+        }
 
-            Animator animator = GetComponentInChildren<Animator>();
-            if (animator != null)
-            {
-                if (lastHandRight)
-                    animator.SetTrigger("PunchLeft");
-                else
-                    animator.SetTrigger("PunchRight");
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        if (!Physics.Raycast(ray, out RaycastHit hit))
+            return;
 
-                lastHandRight = !lastHandRight; 
-            }
+        Vector3 baseDir = hit.point - firePoint.position;
+        baseDir.y = 0f;
+        baseDir.Normalize();
 
-            lastCastTime = Time.time;
-            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                Vector3 baseDir = hit.point - firePoint.position;
-                baseDir.y = 0f;
-                baseDir.Normalize();
-                AimController aim = GetComponent<AimController>();
-                if (aim != null)
-                    aim.SetAim(baseDir);
+        AimController aim = GetComponent<AimController>();
+        if (aim != null)
+            aim.SetAim(baseDir);
 
+        int total = GetProjectileCount();
 
+        for (int i = 0; i < total; i++)
+        {
+            float angleOffset = 0f;
+            if (total > 1)
+                angleOffset = Mathf.Lerp(-spreadAngle, spreadAngle, i / (float)(total - 1));
 
-                int total = GetProjectileCount();
-                for (int i = 0; i < total; i++)
-                {
-                    float angleOffset = 0f;
-                    if (total > 1)
-                        angleOffset = Mathf.Lerp(-spreadAngle, spreadAngle, i / (float)(total - 1));
+            Vector3 dir = Quaternion.Euler(0f, angleOffset, 0f) * baseDir;
+            Vector3 spawnPos = firePoint.position + dir * 0.5f;
 
-                    Vector3 dir = Quaternion.Euler(0f, angleOffset, 0f) * baseDir;
+            GameObject fb = Instantiate(
+                fireballPrefab,
+                spawnPos,
+                Quaternion.LookRotation(dir)
+            );
 
-                    //change1/3
-                    //Vector3 spawnPos = firePoint.position;
-                    //spawnPos.y = firePoint.position.y;
+            fb.GetComponent<FireballProjectile>()
+              .Initialize(dir, fireballSpeed, projectileDuration, gameObject);
 
-                    Vector3 spawnPos = firePoint.position + dir * 0.5f;
-                    /////
-
-                    GameObject fb = Instantiate(fireballPrefab, spawnPos, Quaternion.LookRotation(dir));
-
-                    SpellEcho echo = GetComponent<SpellEcho>();
-                    if (echo != null)
-                    {
-                        StartCoroutine(EchoFireball(
-                            spawnPos,
-                            dir,
-                            echo.echoDelay
-                        ));
-                    }
-
-                    //change2/3
-                    //Collider playerCol = GetComponent<Collider>();
-                    //if (playerCol != null)
-                    //    Physics.IgnoreCollision(fb.GetComponent<Collider>(), playerCol);
-                    /////
-                    ///
-                    fb.GetComponent<FireballProjectile>()
-  .Initialize(dir, fireballSpeed, projectileDuration, gameObject);
-                }
-            }
-
-
+            SpellEcho echo = GetComponent<SpellEcho>();
+            if (echo != null)
+                StartCoroutine(EchoFireball(spawnPos, dir, echo.echoDelay));
         }
     }
 
-    System.Collections.IEnumerator EchoFireball(Vector3 origin, Vector3 dir, float delay)
+    IEnumerator EchoFireball(Vector3 origin, Vector3 dir, float delay)
     {
         yield return new WaitForSeconds(delay);
-        //change3/3
-        //GameObject fb = Instantiate(
-        //    fireballPrefab,
-        //    origin,
-        //    Quaternion.LookRotation(dir)
-        //);
 
         GameObject fb = Instantiate(
-        fireballPrefab,
-        origin + dir * 0.5f,
-        Quaternion.LookRotation(dir)
-);
+            fireballPrefab,
+            origin + dir * 0.5f,
+            Quaternion.LookRotation(dir)
+        );
 
-        ///
-
-        ///4
         fb.GetComponent<FireballProjectile>()
           .Initialize(dir, fireballSpeed, projectileDuration, gameObject);
     }
-
 }
-
-
-
-
