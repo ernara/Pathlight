@@ -8,10 +8,6 @@ public class Laser : HitSkillBase
     public Transform firePoint;
     public float laserDuration = 0.5f;
     public float laserLength = 100f;
-    public float targetRange = 25f;
-
-    [Header("Targeting")]
-    public LayerMask enemyLayer;
 
     void Update()
     {
@@ -23,32 +19,20 @@ public class Laser : HitSkillBase
 
     void FireLaser()
     {
-        Collider[] enemies = Physics.OverlapSphere(
-            firePoint.position,
-            targetRange,
-            enemyLayer
-        );
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-        if (enemies.Length == 0)
-        {
-            Debug.Log("No enemies in range");
+        if (!Physics.Raycast(ray, out RaycastHit hit))
             return;
-        }
 
-        // pick random enemy
-        Collider target = enemies[Random.Range(0, enemies.Length)];
-        Debug.Log("Targeting: " + target.name);
-
-        Vector3 dir = target.bounds.center - firePoint.position;
+        Vector3 dir = hit.point - firePoint.position;
         dir.y = 0f;
         dir.Normalize();
 
-        // damage
-        Ray ray = new Ray(firePoint.position, dir);
-        if (Physics.Raycast(ray, out RaycastHit hit, laserLength, enemyLayer))
+        // damage anything in the path
+        Ray shootRay = new Ray(firePoint.position, dir);
+        if (Physics.Raycast(shootRay, out RaycastHit laserHit, laserLength))
         {
-            Debug.Log("Laser hit: " + hit.collider.name);
-            TryHit(hit.collider);
+            TryHit(laserHit.collider);
         }
 
         SpawnLaser(firePoint.position, dir);

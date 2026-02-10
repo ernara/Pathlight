@@ -49,10 +49,13 @@ public class Fireball : MonoBehaviour
     {
         float remaining = GetFinalCooldown() - (Time.time - lastCastTime);
 
-        if (remaining > 0)
-            cooldownText.text = remaining.ToString("F1");
-        else
-            cooldownText.text = "";
+        if (cooldownText != null)
+        {
+            if (remaining > 0)
+                cooldownText.text = remaining.ToString("F1");
+            else
+                cooldownText.text = "";
+        }
 
 
         if (!Keyboard.current.qKey.wasPressedThisFrame)
