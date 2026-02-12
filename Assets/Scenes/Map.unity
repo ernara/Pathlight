@@ -598,6 +598,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!4 &615476970 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8636224725940556928, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
+  m_PrefabInstance: {fileID: 708513996}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &708513996
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -673,6 +678,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6326949551973412265, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
       insertIndex: -1
       addedObject: {fileID: 708513998}
+    - targetCorrespondingSourceObject: {fileID: 6326949551973412265, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 708513999}
   m_SourcePrefab: {fileID: 100100000, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
 --- !u!1 &708513997 stripped
 GameObject:
@@ -694,6 +702,22 @@ MonoBehaviour:
   clonePrefab: {fileID: 6326949551973412265, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
   cloneCount: 10
   spawnRadius: 5
+--- !u!114 &708513999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708513997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f77228b5a53619c4082fd54348022d4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CubeSpell
+  cubePrefab: {fileID: 9121843079351392376, guid: e7ae15d1c4fc183458657647ef6190c4, type: 3}
+  firePoint: {fileID: 615476970}
+  speed: 10
+  cooldown: 1
 --- !u!1 &741639038
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,13 +19,17 @@ public class CubeSpell : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (!Physics.Raycast(ray, out RaycastHit hit)) return;
 
-        Vector3 dir = (hit.point - firePoint.position);
+        Vector3 dir = hit.point - firePoint.position;
         dir.y = 0f;
-        dir.Normalize();
 
-        GameObject cube = Instantiate(cubePrefab, firePoint.position, Quaternion.LookRotation(dir));
-        cube.GetComponent<Rigidbody>().linearVelocity = dir * speed;
+        Rigidbody rb = Instantiate(
+            cubePrefab,
+            firePoint.position,
+            Quaternion.LookRotation(dir)
+        ).GetComponent<Rigidbody>();
 
-        Destroy(cube, 4f);
+        rb.linearVelocity = dir.normalized * speed;
+
+        Destroy(rb.gameObject, 4f);
     }
 }
