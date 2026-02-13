@@ -1,23 +1,25 @@
 //using UnityEngine;
 
+
 //public class Boss : MonoBehaviour
 //{
 //    int hits;
 
-//    void OnTriggerEnter(Collider other)
+//    void OnCollisionEnter(Collision col)
 //    {
-//        if (other.CompareTag("Cube"))
-//        {
-//            other.tag = "Untagged";      
-//            hits++;
-//            if (hits >= 4) Destroy(gameObject);
-//        }
+//        Spell spell = col.gameObject.GetComponent<Spell>();
+//        if (spell == null) return;
+
+//        hits++;
+//        //Destroy(col.gameObject);   //sudestroyins spello
+
+//        if (hits >= 4)
+//            Destroy(gameObject);
 //    }
 //}
 
 
 using UnityEngine;
-
 
 public class Boss : MonoBehaviour
 {
@@ -25,15 +27,24 @@ public class Boss : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        Spell spell = col.gameObject.GetComponent<Spell>();
+        HandleSpellHit(col.gameObject);
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        HandleSpellHit(col.gameObject);
+    }
+
+    void HandleSpellHit(GameObject obj)
+    {
+        Spell spell = obj.GetComponent<Spell>();
         if (spell == null) return;
 
         hits++;
-        //Destroy(col.gameObject);   //sudestroyins spello
-
         if (hits >= 4)
             Destroy(gameObject);
     }
 }
+
 
 

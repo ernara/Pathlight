@@ -651,10 +651,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3577027443472008044, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
+      propertyPath: extraProjectiles
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3796777904269433385, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
       propertyPath: cooldownText
       value: 
       objectReference: {fileID: 1342719723}
+    - target: {fileID: 3796777904269433385, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
+      propertyPath: fireballSpeed
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 5301645370948458934, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
       propertyPath: m_Enabled
       value: 0
