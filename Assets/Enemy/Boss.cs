@@ -1,50 +1,80 @@
-//using UnityEngine;
-
-
-//public class Boss : MonoBehaviour
-//{
-//    int hits;
-
-//    void OnCollisionEnter(Collision col)
-//    {
-//        Spell spell = col.gameObject.GetComponent<Spell>();
-//        if (spell == null) return;
-
-//        hits++;
-//        //Destroy(col.gameObject);   //sudestroyins spello
-
-//        if (hits >= 4)
-//            Destroy(gameObject);
-//    }
-//}
-
-
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Boss : MonoBehaviour
 {
     int hits;
 
+    Dictionary<Spell, float> dotTimers = new Dictionary<Spell, float>();
+
     void OnCollisionEnter(Collision col)
     {
-        HandleSpellHit(col.gameObject);
+        HandleInstantSpell(col.gameObject);
     }
 
     void OnTriggerEnter(Collider col)
     {
-        HandleSpellHit(col.gameObject);
+        HandleInstantSpell(col.gameObject);
+
+        Spell spell = col.GetComponent<Spell>();
+        if (spell != null && spell.damageOverTime)
+        {
+            dotTimers[spell] = 0f;
+        }
     }
 
-    void HandleSpellHit(GameObject obj)
+    void OnTriggerExit(Collider col)
+    {
+        Spell spell = col.GetComponent<Spell>();
+        if (spell != null && dotTimers.ContainsKey(spell))
+        {
+            dotTimers.Remove(spell);
+        }
+    }
+
+    void Update()
+    {
+        List<Spell> spells = new List<Spell>(dotTimers.Keys);
+
+        foreach (Spell spell in spells)
+        {
+            dotTimers[spell] += Time.deltaTime;
+
+            if (dotTimers[spell] >= spell.tickInterval)
+            {
+                Vector3 poolPos = spell.transform.position;
+                Vector3 bossPos = transform.position;
+
+                Vector2 pool2D = new Vector2(poolPos.x, poolPos.z);
+                Vector2 boss2D = new Vector2(bossPos.x, bossPos.z);
+
+                float dist = Vector2.Distance(pool2D, boss2D);
+
+                if (dist <= spell.GetComponent<Collider>().bounds.extents.x)
+                {
+                    ApplyDamage(spell.damage);
+                }
+
+                dotTimers[spell] = 0f;
+            }
+        }
+    }
+
+
+    void HandleInstantSpell(GameObject obj)
     {
         Spell spell = obj.GetComponent<Spell>();
         if (spell == null) return;
+        if (spell.damageOverTime) return;
 
-        hits++;
+        ApplyDamage(spell.damage);
+    }
+
+    void ApplyDamage(int amount)
+    {
+        hits += amount;
+
         if (hits >= 4)
             Destroy(gameObject);
     }
 }
-
-
-

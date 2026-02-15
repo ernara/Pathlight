@@ -25,33 +25,22 @@ public class Pool : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-        if (!Physics.Raycast(ray, out RaycastHit hit, 500f))
+        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+
+        if (!groundPlane.Raycast(ray, out float distance))
         {
-            Debug.Log("Raycast failed");
+            Debug.Log("Plane raycast failed");
             return;
         }
 
-        Debug.Log("Hit: " + hit.collider.name);
+        Vector3 spawnPos = ray.GetPoint(distance);
+        spawnPos.y = 0.01f;
 
-        Vector3 spawnPos = hit.point;
-        spawnPos.y += 0.02f; // avoid z-fighting
-
-        GameObject pool = Instantiate(
-            poolPrefab,
-            spawnPos,
-            Quaternion.identity
-        );
+        GameObject pool = Instantiate(poolPrefab, spawnPos, Quaternion.identity);
 
         Destroy(pool, lifetime);
     }
+
 }
 
-//public class DamagePool : MonoBehaviour
-//{
-//    void OnTriggerStay(Collider other)
-//    {
-//        Enemy enemy = other.GetComponent<Enemy>();
-//        if (enemy != null)
-//            enemy.TakeHit(gameObject);
-//    }
-//}
+

@@ -653,7 +653,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3577027443472008044, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
       propertyPath: extraProjectiles
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3796777904269433385, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
       propertyPath: cooldownText
@@ -661,7 +661,7 @@ PrefabInstance:
       objectReference: {fileID: 1342719723}
     - target: {fileID: 3796777904269433385, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
       propertyPath: fireballSpeed
-      value: 20
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5301645370948458934, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
       propertyPath: m_Enabled

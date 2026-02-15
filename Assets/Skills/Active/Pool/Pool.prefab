@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 8126297284581402155}
   - component: {fileID: 7116487663542785808}
   - component: {fileID: 156970192049886878}
-  - component: {fileID: 3277914834363510468}
+  - component: {fileID: 1160385600337114883}
+  - component: {fileID: -176079163974274996}
   m_Layer: 0
   m_Name: Pool
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.43797, y: 0.22638, z: 2.68213}
-  m_LocalScale: {x: 10, y: 0.5, z: 10}
+  m_LocalScale: {x: 10, y: 0.1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -91,7 +92,22 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &3277914834363510468
+--- !u!114 &1160385600337114883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7987362700310603676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 946b13401153c7b43978444812ecde0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Spell
+  damage: 1
+  damageOverTime: 1
+  tickInterval: 1
+--- !u!136 &-176079163974274996
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,7 +126,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
+  m_Radius: 5
+  m_Height: 0.2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
