@@ -1,10 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class Boss : MonoBehaviour
+public class Boss : EnemyBase
 {
-    int hits;
-
     Dictionary<Spell, float> dotTimers = new Dictionary<Spell, float>();
 
     void OnCollisionEnter(Collision col)
@@ -31,8 +29,6 @@ public class Boss : MonoBehaviour
             dotTimers.Remove(spell);
         }
     }
-
-
 
     void Update()
     {
@@ -68,8 +64,6 @@ public class Boss : MonoBehaviour
         }
     }
 
-
-
     void HandleInstantSpell(GameObject obj)
     {
         Spell spell = obj.GetComponent<Spell>();
@@ -77,13 +71,5 @@ public class Boss : MonoBehaviour
         if (spell.damageOverTime) return;
 
         ApplyDamage(spell.damage);
-    }
-
-    void ApplyDamage(int amount)
-    {
-        hits += amount;
-
-        if (hits >= 4)
-            Destroy(gameObject);
     }
 }

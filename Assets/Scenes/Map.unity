@@ -963,6 +963,7 @@ GameObject:
   - component: {fileID: 1031037758}
   - component: {fileID: 1031037760}
   - component: {fileID: 1031037759}
+  - component: {fileID: 1031037761}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -1025,6 +1026,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d89a2c845dcbcd42af1f03c8d2fefe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Boss
+  maxHits: 4
 --- !u!136 &1031037760
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1048,6 +1050,21 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1031037761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031037753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0344e35436877a4fb2dc9bb1ec6b015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Respawner
+  respawnTime: 3
+  spawnOffset: {x: 0, y: 0, z: 0}
+  visual: {fileID: 0}
 --- !u!1 &1140505679
 GameObject:
   m_ObjectHideFlags: 0
