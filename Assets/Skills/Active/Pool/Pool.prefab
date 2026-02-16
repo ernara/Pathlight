@@ -107,6 +107,7 @@ MonoBehaviour:
   damage: 1
   damageOverTime: 1
   tickInterval: 1
+  radius: 3
 --- !u!136 &-176079163974274996
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -126,7 +127,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 5
+  m_Radius: 1
   m_Height: 0.2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}

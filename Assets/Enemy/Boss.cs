@@ -32,12 +32,20 @@ public class Boss : MonoBehaviour
         }
     }
 
+
+
     void Update()
     {
         List<Spell> spells = new List<Spell>(dotTimers.Keys);
 
         foreach (Spell spell in spells)
         {
+            if (spell == null)
+            {
+                dotTimers.Remove(spell);
+                continue;
+            }
+
             dotTimers[spell] += Time.deltaTime;
 
             if (dotTimers[spell] >= spell.tickInterval)
@@ -50,7 +58,7 @@ public class Boss : MonoBehaviour
 
                 float dist = Vector2.Distance(pool2D, boss2D);
 
-                if (dist <= spell.GetComponent<Collider>().bounds.extents.x)
+                if (dist <= spell.radius)
                 {
                     ApplyDamage(spell.damage);
                 }
@@ -59,6 +67,7 @@ public class Boss : MonoBehaviour
             }
         }
     }
+
 
 
     void HandleInstantSpell(GameObject obj)
