@@ -19,14 +19,19 @@ public class Laser : HitSkillBase
 
     void FireLaser()
     {
+        if (Camera.main == null) return;
+
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-        if (!Physics.Raycast(ray, out RaycastHit hit))
+        // Raycast against ground only
+        if (!Physics.Raycast(ray, out RaycastHit hit, 1000f))
             return;
 
-        Vector3 dir = hit.point - firePoint.position;
-        dir.y = 0f;
-        dir.Normalize();
+        // Keep target Y at the same height as firePoint (ignore enemy collider height)
+        Vector3 target = hit.point;
+        target.y = firePoint.position.y;
+
+        Vector3 dir = (target - firePoint.position).normalized;
 
         // damage anything in the path
         Ray shootRay = new Ray(firePoint.position, dir);
@@ -40,11 +45,7 @@ public class Laser : HitSkillBase
         SpellEcho echo = GetComponent<SpellEcho>();
         if (echo != null)
         {
-            StartCoroutine(EchoLaser(
-                firePoint.position,
-                dir,
-                echo.echoDelay
-            ));
+            StartCoroutine(EchoLaser(firePoint.position, dir, echo.echoDelay));
         }
     }
 
@@ -56,11 +57,7 @@ public class Laser : HitSkillBase
 
     void SpawnLaser(Vector3 origin, Vector3 dir)
     {
-        GameObject laser = Instantiate(
-            laserPrefab,
-            origin,
-            Quaternion.LookRotation(dir)
-        );
+        GameObject laser = Instantiate(laserPrefab, origin, Quaternion.LookRotation(dir));
 
         ApplyThicc(laser);
 
@@ -78,8 +75,7 @@ public class Laser : HitSkillBase
     void ApplyThicc(GameObject laser)
     {
         Thicc thicc = GetComponent<Thicc>();
-        if (thicc == null)
-            return;
+        if (thicc == null) return;
 
         laser.transform.localScale = new Vector3(
             laser.transform.localScale.x * thicc.thicknessMultiplier,
