@@ -7,9 +7,23 @@ public class FireballProjectile : HitSkillBase
     float lifetime;
     Vector3 startPosition;
     bool returning = false;
+    public AudioClip castSound;
+    [HideInInspector]
+    public AudioSource audioSource;
+
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     public void Initialize(Vector3 dir, float spd, float baseDuration, GameObject caster)
     {
+        if (audioSource != null && castSound != null)
+        {
+            audioSource.Stop();
+            audioSource.PlayOneShot(castSound);
+        }
+
         direction = dir;
         speed = spd;
         lifetime = baseDuration;
