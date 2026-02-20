@@ -10,7 +10,6 @@ public class Pool : MonoBehaviour
     {
         if (Keyboard.current.tKey.wasPressedThisFrame)
         {
-            Debug.Log("hmmmm");
             CastPool();
         }
     }
@@ -19,7 +18,6 @@ public class Pool : MonoBehaviour
     {
         if (Camera.main == null)
         {
-            Debug.LogError("No Main Camera");
             return;
         }
 
@@ -29,7 +27,6 @@ public class Pool : MonoBehaviour
 
         if (!groundPlane.Raycast(ray, out float distance))
         {
-            Debug.Log("Plane raycast failed");
             return;
         }
 

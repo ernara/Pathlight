@@ -10,6 +10,8 @@ public class ClickMove : MonoBehaviour
     float flatBonus;
     float percentBonus;
 
+    public LayerMask groundLayer;
+
     Vector3 target;
     bool hasTarget;
     Animator animator;
@@ -27,7 +29,7 @@ public class ClickMove : MonoBehaviour
         if (Mouse.current.leftButton.isPressed)
         {
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            if(Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, groundLayer, QueryTriggerInteraction.Ignore))
             {
                 target = hit.point;
                 hasTarget = true;

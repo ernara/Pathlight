@@ -97,7 +97,7 @@ public class EnemyBase : MonoBehaviour
     {
         isAlive = false;
 
-        Respawner respawner = GetComponent<Respawner>();
+        EnemyRespawner respawner = GetComponent<EnemyRespawner>();
         if (respawner != null)
         {
             respawner.OnDeath();

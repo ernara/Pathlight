@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Respawner : MonoBehaviour
+public class EnemyRespawner : MonoBehaviour
 {
     public float respawnTime = 3f;         
     public Vector3 spawnOffset = Vector3.zero; 
