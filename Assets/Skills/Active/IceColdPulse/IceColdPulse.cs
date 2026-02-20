@@ -3,57 +3,35 @@ using UnityEngine.InputSystem;
 
 public class IceColdPulse : MonoBehaviour
 {
-    public float range = 10f;
-    public LayerMask enemyLayer;
-
     public GameObject pulsePrefab;
-    public float pulseDuration = 0.5f;
+    public float lifetime = 5f;
+
+    void Awake()
+    {
+        MeshRenderer[] renderers = GetComponentsInChildren<MeshRenderer>();
+        foreach (var mr in renderers)
+        {
+            mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            mr.receiveShadows = false;
+        }
+    }
 
     void Update()
     {
         if (Keyboard.current != null && Keyboard.current.cKey.wasPressedThisFrame)
         {
-            Debug.Log("C pressed");
-            Cast();
+            CastPulse();
         }
     }
 
-    void Cast()
+    void CastPulse()
     {
-        if (pulsePrefab != null)
-        {
-            GameObject pulse = Instantiate(pulsePrefab, transform.position, Quaternion.identity);
-            pulse.transform.localScale = Vector3.one * range * 2f;
-            Destroy(pulse, pulseDuration);
-        }
+        if (pulsePrefab == null) return;
 
+        Vector3 spawnPos = transform.position;
 
-        Collider[] hits = Physics.OverlapSphere(transform.position, range);
+        GameObject pulse = Instantiate(pulsePrefab, spawnPos, Quaternion.identity);
 
-
-        foreach (var h in hits)
-        {
-            Enemy2 e = h.GetComponent<Enemy2>();
-            if (e != null)
-            {
-                e.Hit();
-            }
-        }
-
-        if (hits.Length == 0)
-            return;
-
-        Enemy2 enemy2 = hits[0].GetComponent<Enemy2>();
-        if (enemy2 != null)
-        {
-            enemy2.Hit();
-        }
-    }
-
-    // visual helper (editor only)
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, range);
+        Destroy(pulse, lifetime);
     }
 }

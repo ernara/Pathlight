@@ -22,7 +22,6 @@ public class Dash : MonoBehaviour
 
         float remaining = cooldown - (Time.time - lastDashTime);
 
-        // UI
         if (dashText != null)
         {
             if (remaining <= 0)
@@ -31,7 +30,6 @@ public class Dash : MonoBehaviour
                 dashText.text = "Dash - " + remaining.ToString("F1") + "s";
         }
 
-        // Cooldown check
         if (Keyboard.current.rKey.wasPressedThisFrame && remaining <= 0)
         {
             lastDashTime = Time.time;
