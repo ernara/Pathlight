@@ -36,7 +36,7 @@ public class Respawner : MonoBehaviour
         Collider col = GetComponent<Collider>();
         if (col != null) col.enabled = true;
         Rigidbody rb = GetComponent<Rigidbody>();
-        if (rb != null) rb.isKinematic = false;
+        if (rb != null) rb.isKinematic = true;
 
         EnemyBase enemy = GetComponent<EnemyBase>();
         if (enemy != null)
