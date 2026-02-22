@@ -359,7 +359,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ClonePlayer
   clonePrefab: {fileID: 6326949551973412265, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
-  cloneDuration: 10
+  cloneCount: 10
+  spawnRadius: 5
 --- !u!1 &425463025
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,6 +639,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5281651445708603651, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
     - target: {fileID: 6326949551973412265, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
       propertyPath: m_Name
       value: Player
@@ -826,6 +831,10 @@ PrefabInstance:
     - target: {fileID: 6780038913812625461, guid: d9d6f75c302828d4ca33ffa82a3f3eb7, type: 3}
       propertyPath: m_Name
       value: Ground
+      objectReference: {fileID: 0}
+    - target: {fileID: 6780038913812625461, guid: d9d6f75c302828d4ca33ffa82a3f3eb7, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8192136505638523656, guid: d9d6f75c302828d4ca33ffa82a3f3eb7, type: 3}
       propertyPath: m_LocalPosition.x

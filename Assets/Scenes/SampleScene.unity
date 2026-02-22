@@ -171,6 +171,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5281651445708603651, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
     - target: {fileID: 6326949551973412265, guid: f779f3b228edf6049901b971ebb89b49, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1156,7 +1160,7 @@ GameObject:
   - component: {fileID: 1153204880}
   - component: {fileID: 1153204879}
   - component: {fileID: 1153204878}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}

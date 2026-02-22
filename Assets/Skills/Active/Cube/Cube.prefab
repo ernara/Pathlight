@@ -175,3 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 946b13401153c7b43978444812ecde0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Spell
+  damage: 1
+  damageOverTime: 0
+  tickInterval: 1
+  radius: 3
